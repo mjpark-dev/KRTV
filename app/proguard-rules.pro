@@ -20,6 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keep class com.lizongying.mytv0.data.** {
+-keep class dev.mjpark.krtv.data.** {
     <fields>;
 }

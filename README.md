@@ -1,101 +1,71 @@
 # KRTV
 
-電視視頻播放軟件，可以自定義視頻源
+KRTV 是面向 Android TV 的韩国电视直播播放器，支持遥控器操作、M3U 播放列表、频道收藏、远程配置和应用内更新。
 
-[KRTV](https://github.com/mjpark-dev/KRTV)
+## 当前内置直播源
 
-## 使用
+KRTV 默认只包含项目维护者自己的播放列表：
 
-* 遙控器中鍵/觸屏單擊打開視頻列表
-* 遙控器右鍵/觸屏雙擊打開配置
-* 遙控器左鍵/觸屏長按打開節目單
-* 遙控器返回鍵關閉視頻列表/配置
-* 在聚焦視頻標題的時候，右鍵收藏/取消收藏
-* 打開配置后，選擇遠程配置，掃描二維碼可以配置視頻源等。也可以直接遠程配置地址 http://0.0.0.0:34567
-* 如果視頻源地址已配置，並且打開了“應用啟動后更新視頻源”后，應用啟動后會自動更新視頻源
-* 默認遙控器下鍵/觸屏下滑切換到下一個視頻。換台反轉打開後，邏輯相反
-
-注意：
-
-* 遇到問題可以先考慮重啟/恢復默認/清除數據/重新安裝等方式自助解決
-* 視頻源可以設置為本地文件，格式如：file:///mnt/sdcard/tmp/channels.m3u
-  /channels.m3u
-* 為了使用方便，只支持設置3位頻道號
-* 目前設置代理後，需要重啟生效。代理屬於全局代理，也就是視頻請求及其他請求都會使用代理。
-
-目前支持的配置格式：
-
-* txt
-    ```
-    組名,#genre#
-    標題,視頻地址
-    ```
-* m3u
-    ```
-    #EXTM3U x-tvg-url=""
-    #EXTINF:-1 tvg-id="" tvg-chno="" tvg-name="標準標題" tvg-logo="图标" group-title="組名",標題
-    #EXTVLCOPT:http-user-agent=
-    #EXTVLCOPT:http-referrer=
-    視頻地址
-    ```
-* json
-    ```json
-    [
-      {
-        "group": "組名",
-        "name": "標準標題",
-        "title": "標題",
-        "logo": "图标",
-        "number": "頻道號",
-        "uris": [
-          "視頻地址"
-        ],
-        "headers": {
-          "user-agent": ""
-        }
-      }
-    ]
-    ```
-
-推薦配合使用 [my-tv-server](https://github.com/lizongying/my-tv-server)
-
-下載安裝 [releases](https://github.com/mjpark-dev/KRTV/releases/)
-
-注意，“*-kitkat”為安卓4.4兼容版本
-
-![image](./screenshots/Screenshot_20240810_151748.png)
-![image](./screenshots/Screenshot_20240813_232847.png)
-![image](./screenshots/Screenshot_20240813_232900.png)
-
-## 更新日誌
-
-[更新日誌](./HISTORY.md)
-
-## 其他
-
-建議通過ADB進行安裝：
-
-```shell
-adb install KRTV.apk
+```text
+https://raw.githubusercontent.com/mjpark-dev/iptv/refs/heads/master/korean.m3u
 ```
 
-小米電視可以使用小米電視助手進行安裝
+播放列表内容由独立仓库维护，KRTV 仓库不保存频道视频流。使用者应自行确认所在地区的网络访问条件及相关内容授权。
 
-## TODO
+## 操作方式
 
-* 支持回看
-* 淺色菜單
+- 遥控器中键：打开频道列表
+- 遥控器右键：打开设置
+- 遥控器左键：打开节目单
+- 遥控器返回键：关闭当前菜单
+- 聚焦频道标题后按右键：收藏或取消收藏
+- 默认使用遥控器上下键切换频道，可在设置中反转换台方向
 
-## 常見問題
+## 直播源格式
 
-* 為什麼遠程配置視頻源文本後，再次打開應用後又恢復到原來的配置？
+支持 M3U、TXT 和 JSON。M3U 示例：
 
-  如果“應用啟動后更新視頻源”開啟後，且存在視頻源地址，則會自動更新，可能會覆蓋已保存的視頻源文本。
+```m3u
+#EXTM3U
+#EXTINF:-1 tvg-id="channel-id" tvg-name="频道名称" group-title="韩国电视",频道名称
+https://example.com/live.m3u8
+```
 
-## 讚賞
+KRTV 当前没有内置 EPG 地址。需要节目单时，可在设置中填写与频道 `tvg-id` 匹配的 XMLTV 地址。
 
-![image](./screenshots/appreciate.png)
+## 远程配置
 
-## 感謝
+应用与电视处于同一局域网时，可在设置页面查看远程配置地址。默认端口为 `34567`。
 
-[live](https://github.com/lizongying/my-tv-0)
+## 构建
+
+项目要求 JDK 21，并通过 Gradle Wrapper 构建：
+
+```shell
+./gradlew clean testDebugUnitTest assembleRelease
+```
+
+生成目录：
+
+```text
+app/build/outputs/apk/release/
+```
+
+## 发布签名
+
+发布版必须始终使用同一份签名密钥。GitHub Actions 发布流程需要配置以下仓库 Secrets：
+
+- `KEYSTORE`：Base64 编码的密钥库
+- `KEYSTORE_PASSWORD`
+- `ALIAS`
+- `ALIAS_PASSWORD`
+
+推送 `v*` 标签会构建签名 APK 并创建 GitHub Release。首版标签建议使用 `v1.0.0`。
+
+## 下载
+
+正式版本发布后可从 [GitHub Releases](https://github.com/mjpark-dev/KRTV/releases) 下载。
+
+## 许可证
+
+本项目遵循 [MIT License](LICENSE)。依据许可证要求，原始版权声明保留在许可证文件中。

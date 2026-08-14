@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.lizongying.mytv0"
+    namespace = "dev.mjpark.krtv"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.lizongying.mytv0"
+        applicationId = "dev.mjpark.krtv"
         minSdk = 21
         targetSdk = 35
         versionCode = 1
@@ -54,7 +54,6 @@ dependencies {
     implementation(libs.media3.datasource.rtmp)
 
     implementation(libs.nanohttpd)
-    implementation(libs.gua64)
     implementation(libs.zxing)
     implementation(libs.glide)
 
