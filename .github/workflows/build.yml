@@ -78,3 +78,35 @@ jobs:
           files: KRTV_${{ github.ref_name }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Synchronize in-app update metadata
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION_CODE=$(sed -n 's/.*versionCode = \([0-9][0-9]*\).*/\1/p' app/build.gradle.kts | head -n 1)
+          VERSION_NAME="${GITHUB_REF_NAME#v}"
+          APK_NAME="KRTV_${GITHUB_REF_NAME}.apk"
+          APK_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${GITHUB_REF_NAME}/${APK_NAME}"
+
+          if [ -z "$VERSION_CODE" ]; then
+            echo "Unable to read versionCode from app/build.gradle.kts" >&2
+            exit 1
+          fi
+
+          jq -n \
+            --argjson version_code "$VERSION_CODE" \
+            --arg version_name "$VERSION_NAME" \
+            --arg apk_name "$APK_NAME" \
+            --arg apk_url "$APK_URL" \
+            '{version_code: $version_code, version_name: $version_name, apk_name: $apk_name, apk_url: $apk_url}' \
+            > version.json
+
+          CONTENT=$(base64 -w 0 version.json)
+          CURRENT_SHA=$(gh api "repos/${GITHUB_REPOSITORY}/contents/version.json?ref=main" --jq .sha)
+          gh api "repos/${GITHUB_REPOSITORY}/contents/version.json" \
+            --method PUT \
+            --field message="Update in-app metadata for ${GITHUB_REF_NAME}" \
+            --field content="$CONTENT" \
+            --field sha="$CURRENT_SHA" \
+            --field branch=main
