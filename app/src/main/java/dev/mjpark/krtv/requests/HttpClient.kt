@@ -22,37 +22,32 @@ object HttpClient {
 
     private val clientCache = mutableMapOf<String?, OkHttpClient>()
 
-    val okHttpClient: OkHttpClient by lazy {
-        getClientWithProxy()
-    }
-
-    val builder: OkHttpClient.Builder by lazy {
-        createBuilder()
-    }
+    val okHttpClient: OkHttpClient
+        get() = getClientWithProxy()
 
     fun getClientWithProxy(): OkHttpClient {
         clientCache[SP.proxy]?.let {
             return it
         }
 
-        if (!SP.proxy.isNullOrEmpty()) {
-            try {
-                val proxyUri = Uri.parse(formatUrl(SP.proxy!!))
-                val proxyType = when (proxyUri.scheme) {
-                    "http", "https" -> Proxy.Type.HTTP
-                    "socks", "socks5" -> Proxy.Type.SOCKS
-                    else -> null
+        val client = createBuilder().apply {
+            if (!SP.proxy.isNullOrEmpty()) {
+                try {
+                    val proxyUri = Uri.parse(formatUrl(SP.proxy!!))
+                    val proxyType = when (proxyUri.scheme) {
+                        "http", "https" -> Proxy.Type.HTTP
+                        "socks", "socks5" -> Proxy.Type.SOCKS
+                        else -> null
+                    }
+                    proxyType?.let {
+                        proxy(Proxy(it, InetSocketAddress.createUnresolved(proxyUri.host, proxyUri.port)))
+                    }
+                    Log.i(TAG, "apply proxy $proxyUri")
+                } catch (e: Exception) {
+                    Log.e(TAG, "getClientWithProxy", e)
                 }
-                proxyType?.let {
-                    builder.proxy(Proxy(it, InetSocketAddress(proxyUri.host, proxyUri.port)))
-                }
-                Log.i(TAG, "apply proxy $proxyUri")
-            } catch (e: Exception) {
-                Log.e(TAG, "getClientWithProxy", e)
             }
-        }
-
-        val client = builder.build()
+        }.build()
         clientCache[SP.proxy] = client
         return client
     }

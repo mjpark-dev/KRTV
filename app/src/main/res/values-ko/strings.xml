@@ -2,7 +2,6 @@
     <string name="app_name">KRTV</string>
     <string name="title_channel_reversal">채널 전환 방향 반대로</string>
     <string name="title_channel_num">채널 전환 시 채널 번호 표시</string>
-    <string name="check_version">업데이트 확인</string>
     <string name="language">언어</string>
     <string name="title_boot_startup">부팅 시 자동 실행</string>
     <string name="channels">방송 소스 변경</string>
@@ -53,4 +52,14 @@
     <string name="no_video_source">영상 소스 없음</string>
     <string name="soft_decode">소프트웨어 디코딩</string>
     <string name="epg_is_empty">EPG가 비어 있습니다</string>
+    <string name="hy2_settings">Hy2 네트워크 가속</string>
+    <string name="hy2_title">KRTV · Hy2 네트워크 가속</string>
+    <string name="hy2_uri_hint">hysteria2:// 또는 hy2:// 공유 링크 붙여넣기</string>
+    <string name="hy2_connect">연결 및 사용</string>
+    <string name="hy2_disconnect">연결 해제 및 직접 연결</string>
+    <string name="hy2_back">KRTV로 돌아가기</string>
+    <string name="hy2_connecting">상태: 연결 중…</string>
+    <string name="hy2_status_off">상태: 연결 안 됨 (직접 연결)</string>
+    <string name="hy2_status_on">상태: Hy2를 통해 연결됨</string>
+    <string name="hy2_failed">연결 실패: %1$s</string>
 </resources>

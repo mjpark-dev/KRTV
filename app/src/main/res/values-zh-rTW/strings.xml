@@ -2,7 +2,6 @@
     <string name="app_name">KRTV</string>
     <string name="title_channel_reversal">換台反轉</string>
     <string name="title_channel_num">換台時顯示頻道號</string>
-    <string name="check_version">更新應用</string>
     <string name="language">語言</string>
     <string name="title_boot_startup">開機自啟</string>
     <string name="channels">換視頻源</string>
@@ -51,4 +50,14 @@
     <string name="no_video_source">暫無視頻源</string>
     <string name="soft_decode">軟解</string>
     <string name="epg_is_empty">節目單為空</string>
+    <string name="hy2_settings">Hy2 網路加速</string>
+    <string name="hy2_title">KRTV · Hy2 網路加速</string>
+    <string name="hy2_uri_hint">貼上 hysteria2:// 或 hy2:// 分享連結</string>
+    <string name="hy2_connect">連線並啟用</string>
+    <string name="hy2_disconnect">中斷並直接連線</string>
+    <string name="hy2_back">返回 KRTV</string>
+    <string name="hy2_connecting">狀態：正在連線…</string>
+    <string name="hy2_status_off">狀態：未連線（KRTV 直連）</string>
+    <string name="hy2_status_on">狀態：已透過 Hy2 連線</string>
+    <string name="hy2_failed">連線失敗：%1$s</string>
 </resources>
