@@ -2,15 +2,12 @@ package dev.mjpark.krtv
 
 import android.app.Application
 import android.content.Context
-import android.content.res.Configuration
 import android.content.res.Resources
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import android.widget.Toast
-import java.util.Locale
 
 class KRTVApplication : Application() {
 
@@ -108,21 +105,6 @@ class KRTVApplication : Application() {
     }
 
     override fun attachBaseContext(base: Context) {
-        try {
-            val locale = Locale.KOREA
-            val config = Configuration()
-            config.setLocale(locale)
-            super.attachBaseContext(
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                    base.createConfigurationContext(config)
-                } else {
-                    val resources = base.resources
-                    resources.updateConfiguration(config, resources.displayMetrics)
-                    base
-                }
-            )
-        } catch (_: Exception) {
-            super.attachBaseContext(base)
-        }
+        super.attachBaseContext(AppLocale.wrap(base))
     }
 }

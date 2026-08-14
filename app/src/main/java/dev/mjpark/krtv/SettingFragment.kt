@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.marginBottom
 import androidx.core.view.marginEnd
 import androidx.core.view.marginTop
@@ -154,6 +155,24 @@ class SettingFragment : Fragment() {
             requireActivity().finishAffinity()
         }
 
+        binding.language.text = "${getString(R.string.language)}: ${AppLocale.displayName(context)}"
+        binding.language.setOnClickListener {
+            val selected = AppLocale.supportedLanguages.indexOf(AppLocale.current(context))
+                .coerceAtLeast(0)
+            AlertDialog.Builder(context)
+                .setTitle(R.string.language)
+                .setSingleChoiceItems(
+                    AppLocale.languageNames.toTypedArray(),
+                    selected
+                ) { dialog, which ->
+                    AppLocale.set(context, AppLocale.supportedLanguages[which])
+                    dialog.dismiss()
+                    requireActivity().recreate()
+                }
+                .show()
+            mainActivity.settingActive()
+        }
+
         val txtTextSize =
             application.px2PxFont(binding.versionName.textSize)
 
@@ -188,6 +207,7 @@ class SettingFragment : Fragment() {
             binding.clear,
             binding.checkVersion,
             binding.exit,
+            binding.language,
         )) {
             i.layoutParams.width = btnWidth
             i.textSize = txtTextSize
