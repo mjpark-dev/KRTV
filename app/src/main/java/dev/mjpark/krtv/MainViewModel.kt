@@ -125,7 +125,15 @@ class MainViewModel : ViewModel() {
         Log.i(TAG, "cacheChannels $cacheFile $cacheChannels")
 
         try {
-            str2Channels(cacheChannels)
+            if (!str2Channels(cacheChannels)) {
+                Log.w(TAG, "cached channels are invalid; restoring bundled channels")
+                cacheChannels = context.resources.openRawResource(DEFAULT_CHANNELS_FILE)
+                    .bufferedReader().use { it.readText() }
+                cacheFile!!.writeText(cacheChannels)
+                if (!str2Channels(cacheChannels)) {
+                    throw IllegalStateException("bundled channels are invalid")
+                }
+            }
         } catch (e: Exception) {
             Log.e(TAG, "init", e)
             cacheFile!!.deleteOnExit()
@@ -539,6 +547,11 @@ class MainViewModel : ViewModel() {
                 Log.d(TAG, "导入频道 $list")
                 Log.i(TAG, "导入频道 ${list.size}")
             }
+        }
+
+        if (list.isEmpty()) {
+            Log.w(TAG, "no channels parsed")
+            return false
         }
 
         groupModel.initTVGroup()
