@@ -574,7 +574,7 @@ class MainViewModel : ViewModel() {
         // 全部频道
         groupModel.tvGroupValue[1].setTVListModel(listModel)
 
-        if (string != cacheChannels && g.encode(string) != cacheChannels) {
+        if (string != cacheChannels) {
             groupModel.initPosition()
         }
 
