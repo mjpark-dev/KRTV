@@ -98,7 +98,7 @@ object SP {
                 val str = it.readText()
                 if (str.isNotEmpty()) {
                     DEFAULT_SOURCES = gson.toJson(
-                        Gua().decode(str).trim().split("\n").map { i ->
+                        Gua().decode(str.trim()).trim().split("\n").map { i ->
                             Source(
                                 uri = i
                             )
