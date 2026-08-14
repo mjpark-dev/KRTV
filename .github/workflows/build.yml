@@ -29,7 +29,7 @@ jobs:
 
       - name: Upload unsigned build for review
         if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: KRTV-unsigned
           path: app/build/outputs/apk/release/*.apk
