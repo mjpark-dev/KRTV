@@ -101,14 +101,14 @@
             android:orientation="horizontal"
             >
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/check_version"
+                android:id="@+id/hy2_settings"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:background="@color/description_blur"
                 android:textColor="@color/blur"
                 android:layout_marginEnd="5dp"
                 android:textSize="14sp"
-                android:text="@string/check_version"
+                android:text="@string/hy2_settings"
                 />
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/exit"

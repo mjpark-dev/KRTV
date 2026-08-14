@@ -6,9 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -33,8 +31,6 @@ class SettingFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var uri: Uri
-
-    private lateinit var updateManager: UpdateManager
 
     private var server = "http://${PortUtil.lan()}:$PORT"
 
@@ -135,11 +131,6 @@ class SettingFragment : Fragment() {
             mainActivity.settingActive()
         }
 
-        binding.checkVersion.setOnClickListener {
-            requestInstallPermissions()
-            mainActivity.settingActive()
-        }
-
         binding.confirmConfig.setOnClickListener {
             val sourcesFragment = SourcesFragment()
 
@@ -170,6 +161,11 @@ class SettingFragment : Fragment() {
                     requireActivity().recreate()
                 }
                 .show()
+            mainActivity.settingActive()
+        }
+
+        binding.hy2Settings.setOnClickListener {
+            startActivity(Intent(context, Hy2SettingsActivity::class.java))
             mainActivity.settingActive()
         }
 
@@ -205,7 +201,7 @@ class SettingFragment : Fragment() {
             binding.remoteSettings,
             binding.confirmConfig,
             binding.clear,
-            binding.checkVersion,
+            binding.hy2Settings,
             binding.exit,
             binding.language,
         )) {
@@ -283,8 +279,6 @@ class SettingFragment : Fragment() {
                 }
             }
         }
-
-        updateManager = UpdateManager(context, context.appVersionCode)
 
         return binding.root
     }
@@ -414,20 +408,6 @@ class SettingFragment : Fragment() {
         if (_binding != null && !hidden) {
             binding.remoteSettings.requestFocus()
         }
-    }
-
-    private fun requestInstallPermissions() {
-        val context = requireContext()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !context.packageManager.canRequestPackageInstalls()) {
-            startActivity(
-                Intent(
-                    Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES,
-                    Uri.parse("package:${context.packageName}")
-                )
-            )
-            return
-        }
-        updateManager.checkAndUpdate()
     }
 
     private fun requestReadPermissions() {

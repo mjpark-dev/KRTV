@@ -2,7 +2,6 @@
     <string name="app_name">KRTV</string>
     <string name="title_channel_reversal">Channel Reversal</string>
     <string name="title_channel_num">Show Channel Number When Switching</string>
-    <string name="check_version">Check for Updates</string>
     <string name="language">Language</string>
     <string name="title_boot_startup">Boot Startup</string>
     <string name="channels">Change Source</string>
@@ -53,4 +52,14 @@
     <string name="no_video_source">No Video Source</string>
     <string name="soft_decode">Soft Decode</string>
     <string name="epg_is_empty">EPG is empty</string>
+    <string name="hy2_settings">Hy2 Acceleration</string>
+    <string name="hy2_title">KRTV · Hy2 Acceleration</string>
+    <string name="hy2_uri_hint">Paste a hysteria2:// or hy2:// share link</string>
+    <string name="hy2_connect">Connect and enable</string>
+    <string name="hy2_disconnect">Disconnect and use direct connection</string>
+    <string name="hy2_back">Back to KRTV</string>
+    <string name="hy2_connecting">Status: Connecting…</string>
+    <string name="hy2_status_off">Status: Disconnected (direct)</string>
+    <string name="hy2_status_on">Status: Connected through Hy2</string>
+    <string name="hy2_failed">Connection failed: %1$s</string>
 </resources>
