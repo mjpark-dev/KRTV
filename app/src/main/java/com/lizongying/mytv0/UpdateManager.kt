@@ -255,7 +255,7 @@ class UpdateManager(
         private const val TAG = "UpdateManager"
         private const val BUFFER_SIZE = 8192
         private const val VERSION_URL =
-            "https://raw.githubusercontent.com/lizongying/my-tv-0/main/version.json"
+            "https://raw.githubusercontent.com/mjpark-dev/KRTV/main/version.json"
     }
 
     override fun onConfirm() {
