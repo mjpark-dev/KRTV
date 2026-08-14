@@ -55,14 +55,14 @@ object Utils {
     fun getDateFormat(format: String): String {
         return SimpleDateFormat(
             format,
-            Locale.CHINA
+            Locale.KOREA
         ).format(Date(System.currentTimeMillis() - between))
     }
 
     fun getDateFormat(format: String, seconds: Int): String {
         return SimpleDateFormat(
             format,
-            Locale.CHINA
+            Locale.KOREA
         ).format(Date(seconds * 1000L))
     }
 
@@ -163,26 +163,6 @@ object Utils {
     }
 
     fun getUrls(url: String): List<String> {
-        return if (url.startsWith("https://raw.githubusercontent.com") || url.startsWith("https://github.com")) {
-            listOf(
-                "https://gh.llkk.cc/",
-                "https://github.moeyy.xyz/",
-                "https://mirror.ghproxy.com/",
-                "https://ghproxy.cn/",
-                "https://ghproxy.net/",
-                "https://ghproxy.click/",
-                "https://ghproxy.com/",
-                "https://github.moeyy.cn/",
-                "https://gh-proxy.llyke.com/",
-                "https://www.ghproxy.cc/",
-                "https://cf.ghproxy.cc/",
-                "https://ghp.ci/",
-                "https://ghfast.top"
-            ).map {
-                "$it$url"
-            }
-        } else {
-            listOf(url)
-        }
+        return listOf(url)
     }
 }
