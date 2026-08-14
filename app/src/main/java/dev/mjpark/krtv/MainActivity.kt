@@ -2,7 +2,6 @@ package dev.mjpark.krtv
 
 import MainViewModel
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Color
 import android.media.AudioManager
 import android.os.Build
@@ -25,7 +24,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import dev.mjpark.krtv.databinding.SettingsWebBinding
-import java.util.Locale
 import kotlin.math.abs
 
 
@@ -846,22 +844,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(base: Context) {
-        try {
-            val locale = Locale.TRADITIONAL_CHINESE
-            val config = Configuration()
-            config.setLocale(locale)
-            super.attachBaseContext(
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                    base.createConfigurationContext(config)
-                } else {
-                    val resources = base.resources
-                    resources.updateConfiguration(config, resources.displayMetrics)
-                    base
-                }
-            )
-        } catch (_: Exception) {
-            super.attachBaseContext(base)
-        }
+        super.attachBaseContext(AppLocale.wrap(base))
     }
 
     companion object {

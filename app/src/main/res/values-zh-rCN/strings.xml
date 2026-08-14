@@ -3,6 +3,7 @@
     <string name="title_channel_reversal">换台反转</string>
     <string name="title_channel_num">换台时显示频道号</string>
     <string name="check_version">更新应用</string>
+    <string name="language">语言</string>
     <string name="title_boot_startup">开机自启</string>
     <string name="channels">换视频源</string>
     <string name="channel">默认频道</string>
