@@ -98,4 +98,4 @@ adb install KRTV.apk
 
 ## 感謝
 
-[live](https://github.com/fanmingming/live)
+[live](https://github.com/lizongying/my-tv-0)
