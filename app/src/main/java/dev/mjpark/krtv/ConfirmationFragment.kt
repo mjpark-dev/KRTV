@@ -16,21 +16,21 @@ class ConfirmationFragment(
             val builder = AlertDialog.Builder(it)
             builder.setTitle(message)
             if (update) {
-                builder.setMessage("??????")
+                builder.setMessage("确定更新吗？")
                     .setPositiveButton(
-                        "??"
+                        "确定"
                     ) { _, _ ->
                         listener.onConfirm()
                     }
                     .setNegativeButton(
-                        "??"
+                        "取消"
                     ) { _, _ ->
                         listener.onCancel()
                     }
             } else {
                 builder.setMessage("")
                     .setNegativeButton(
-                        "??"
+                        "确定"
                     ) { _, _ ->
                     }
             }

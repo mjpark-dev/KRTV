@@ -104,8 +104,8 @@ class MainViewModel : ViewModel() {
         val application = context.applicationContext as KRTVApplication
         imageHelper = application.imageHelper
 
-        groupModel.addTVListModel(TVListModel("????", 0))
-        groupModel.addTVListModel(TVListModel("????", 1))
+        groupModel.addTVListModel(TVListModel("我的收藏", 0))
+        groupModel.addTVListModel(TVListModel("全部頻道", 1))
 
         appDirectory = context.filesDir
         cacheFile = File(appDirectory, CACHE_FILE_NAME)
@@ -397,7 +397,7 @@ class MainViewModel : ViewModel() {
             '[' -> {
                 try {
                     list = gson.fromJson(string, typeTvList)
-                    Log.i(TAG, "???? ${list.size} $list")
+                    Log.i(TAG, "导入频道 ${list.size} $list")
                 } catch (e: Exception) {
                     Log.e(TAG, "str2Channels", e)
                     return false
@@ -485,7 +485,7 @@ class MainViewModel : ViewModel() {
                     l.add(t1)
                 }
                 list = l
-                Log.i(TAG, "???? ${list.size} $list")
+                Log.i(TAG, "导入频道 ${list.size} $list")
             }
 
             else -> {
@@ -536,8 +536,8 @@ class MainViewModel : ViewModel() {
                     l.add(tv)
                 }
                 list = l
-                Log.d(TAG, "???? $list")
-                Log.i(TAG, "???? ${list.size}")
+                Log.d(TAG, "导入频道 $list")
+                Log.i(TAG, "导入频道 ${list.size}")
             }
         }
 
@@ -555,7 +555,7 @@ class MainViewModel : ViewModel() {
         var groupIndex = 2
         var id = 0
         for ((k, v) in map) {
-            val listTVModel = TVListModel(k.ifEmpty { "??" }, groupIndex)
+            val listTVModel = TVListModel(k.ifEmpty { "未知" }, groupIndex)
             for ((listIndex, v1) in v.withIndex()) {
                 v1.tv.id = id
                 v1.setLike(SP.getLike(id))
@@ -571,7 +571,7 @@ class MainViewModel : ViewModel() {
 
         listModel = listModelNew
 
-        // ????
+        // 全部频道
         groupModel.tvGroupValue[1].setTVListModel(listModel)
 
         if (string != cacheChannels && g.encode(string) != cacheChannels) {

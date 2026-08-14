@@ -110,7 +110,7 @@ class PlayerFragment : Fragment() {
                     tv.setErrInfo("")
                     tv.retryTimes = 0
                 } else {
-                    Log.i(TAG, "${tv.tv.title} ????")
+                    Log.i(TAG, "${tv.tv.title} 播放停止")
                 }
             }
 

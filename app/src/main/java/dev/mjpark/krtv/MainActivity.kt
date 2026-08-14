@@ -140,7 +140,7 @@ class MainActivity : AppCompatActivity() {
 //                TVList.groupModel.setPosition(0)
 //                val tvModel = TVList.listModel.find { it.like.value as Boolean }
 //                TVList.setPosition(tvModel?.tv?.id ?: 0)
-//                "??????".showToast()
+//                "播放收藏频道".showToast()
 //            }
 
             viewModel.channelsOk.observe(this) { it ->
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity() {
                             SP.channel = 0
                             0
                         }
-                        Log.i(TAG, "??????")
+                        Log.i(TAG, "播放默認頻道")
                         viewModel.groupModel.getPosition(position)
                     } else {
 //                if (SP.position < 0 || SP.position >= TVList.groupModel.getAllList()!!
@@ -167,13 +167,13 @@ class MainActivity : AppCompatActivity() {
 //                    // R.string.play_last_channel.showToast()
 //                    SP.position
 //                }
-                        Log.i(TAG, "??????")
+                        Log.i(TAG, "播放上次頻道")
                         viewModel.groupModel.getCurrent()
                     }
                     viewModel.groupModel.setPositionPlaying()
                     viewModel.groupModel.getCurrentList()
                         ?.let {
-                            Log.i(TAG, "??? ${it.getName()}")
+                            Log.i(TAG, "當前組 ${it.getName()}")
                             it.setPositionPlaying()
                         }
                     tvModel?.setReady()
@@ -252,7 +252,7 @@ class MainActivity : AppCompatActivity() {
                 if (tvModel.ready.value != null
 //                    && tvModel.tv.id == TVList.positionValue
                 ) {
-                    Log.i(TAG, "${tvModel.tv.title} ????")
+                    Log.i(TAG, "${tvModel.tv.title} 嘗試播放")
                     hideFragment(errorFragment)
                     showFragment(loadingFragment)
                     playerFragment.play(tvModel)

@@ -94,7 +94,7 @@ class MenuFragment : Fragment(), GroupAdapter.ItemListener, ListAdapter.ItemList
             return null
         }
 
-        // ????????????????
+        // 如果不存在當前組，則切換到收藏組
         if (viewModel.groupModel.getCurrentList() == null) {
             viewModel.groupModel.setPosition(0)
         }

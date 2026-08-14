@@ -111,14 +111,14 @@
 </head>
 <body>
 <h1 class="title">KRTV</h1>
-<h4>??????????/??/??????</h4>
+<h4>視頻源可以设置為地址/文本/文件其中之一</h4>
 <hr/>
 
 <div class="item">
-    <label for="uri" id="uri-label">?????</label>
+    <label for="uri" id="uri-label">視頻源地址</label>
     <div class="container">
         <input type="text" id="uri"/>
-        <input type="button" id="confirm-uri" value="??" class="add"/>
+        <input type="button" id="confirm-uri" value="新增" class="add"/>
     </div>
     <div id="sources-new"></div>
     <div id="source"></div>
@@ -127,17 +127,17 @@
 <hr/>
 
 <div class="item">
-    <label for="plain-text" id="plain-text-label">?????</label>
+    <label for="plain-text" id="plain-text-label">視頻源文本</label>
     <div class="container">
         <textarea id="plain-text" rows="4"/></textarea>
-        <input type="button" id="confirm-plain-text" value="??" class="confirm"/>
+        <input type="button" id="confirm-plain-text" value="確認" class="confirm"/>
     </div>
 </div>
 
 <hr/>
 
 <div class="item">
-    <label for="upload-file" id="upload-file-label">????????????????</label>
+    <label for="upload-file" id="upload-file-label">視頻源文件，選擇後會自動上傳保存</label>
     <div class="container">
         <input type="file" id="upload-file" multiple/>
     </div>
@@ -146,10 +146,10 @@
 <hr/>
 
 <div class="item">
-    <label for="channel" id="channel-label">?????????1???0??????</label>
+    <label for="channel" id="channel-label">默認播放頻道號，從1開始。0代表默認設置</label>
     <div class="container">
         <input type="number" id="channel" min="0" max="99"/>
-        <input type="button" id="confirm-channel" value="??" class="confirm"/>
+        <input type="button" id="confirm-channel" value="確認" class="confirm"/>
     </div>
 </div>
 
@@ -159,17 +159,17 @@
     <label for="epg" id="epg-label">EPG</label>
     <div class="container">
         <input type="text" id="epg"/>
-        <input type="button" id="confirm-epg" value="??" class="confirm"/>
+        <input type="button" id="confirm-epg" value="確認" class="confirm"/>
     </div>
 </div>
 
 <hr/>
 
 <div class="item">
-    <label for="proxy" id="proxy-label">????</label>
+    <label for="proxy" id="proxy-label">代理地址</label>
     <div class="container">
         <input type="text" id="proxy"/>
-        <input type="button" id="confirm-proxy" value="??" placeholder="http://0.0.0.0:0" class="confirm"/>
+        <input type="button" id="confirm-proxy" value="確認" placeholder="http://0.0.0.0:0" class="confirm"/>
     </div>
 </div>
 
@@ -183,29 +183,29 @@
     const lang = {
         TRADITIONAL_CHINESE: {
             appName: 'KRTV',
-            description: '??????????/??/??????',
-            uriLabel: '?????',
-            plainTextLabel: '?????',
-            uploadFileLabel: '????????????????',
-            channelLabel: '????????1???0??????',
+            description: '視頻源可以设置為地址/文本/文件其中之一',
+            uriLabel: '視頻源地址',
+            plainTextLabel: '視頻源文本',
+            uploadFileLabel: '視頻源文件，選擇後會自動上傳保存',
+            channelLabel: '默認播放頻道，從1開始。0代表默认設置',
             epgLabel: 'EPG',
-            proxyLabel: '????',
-            confirm: '??',
-            remove: '??',
-            add: '??',
+            proxyLabel: '代理地址',
+            confirm: '確認',
+            remove: '刪除',
+            add: '新增',
         },
         SIMPLIFIED_CHINESE: {
             appName: 'KRTV',
-            description: '??????????/??/??????',
-            uriLabel: '?????',
-            plainTextLabel: '?????',
-            uploadFileLabel: '????????????????',
-            channelLabel: '????????1???0??????',
+            description: '视频源可以设置为地址/文本/文件其中之一',
+            uriLabel: '视频源地址',
+            plainTextLabel: '视频源文本',
+            uploadFileLabel: '视频源文件，选择后会自动上传保存',
+            channelLabel: '默认播放频道，从1开始。0代表默認设置',
             epgLabel: 'EPG',
-            proxyLabel: '????',
-            confirm: '??',
-            remove: '??',
-            add: '??',
+            proxyLabel: '代理地址',
+            confirm: '确认',
+            remove: '删除',
+            add: '新增',
         }
     };
     const t = (key) => lang['TRADITIONAL_CHINESE'][key];
@@ -259,18 +259,18 @@
     document.querySelector('#confirm-uri').onclick = () => {
         let uri = document.querySelector('#uri').value.trim();
         if (!uri) {
-            alert(`?????${uri}`);
+            alert(`無效的地址${uri}`);
             return;
         }
         if (!uri.startsWith('http')) {
             uri = 'http://' + uri;
         }
         if (!uri.startsWith('http')) {
-            alert(`?????${uri}`);
+            alert(`無效的地址${uri}`);
             return;
         }
         if (!isValidUrl(uri)) {
-            alert(`?????${uri}`);
+            alert(`無效的地址${uri}`);
             return;
         }
         document.querySelector('#uri').value = uri;
@@ -281,9 +281,9 @@
                 id: uuid,
                 uri: uri,
             }))
-            showMessage('???', 3000);
+            showMessage('已確認', 3000);
 
-            let htmlString = `<div class="container history"><input type="text" readonly value="${uri}" class="source-grey"/><input type="button" value="??" class="remove" data-source-id="${uuid}"/></div>`;
+            let htmlString = `<div class="container history"><input type="text" readonly value="${uri}" class="source-grey"/><input type="button" value="删除" class="remove" data-source-id="${uuid}"/></div>`;
             let doc = new DOMParser().parseFromString(htmlString, 'text/html');
             const firstChild = source.firstChild;
             if (firstChild) {
@@ -300,9 +300,9 @@
         const content = document.querySelector('#plain-text').value.trim();
         if (content.length > 0) {
             save('/api/import-text', content)
-            showMessage('???', 3000);
+            showMessage('已確認', 3000);
         } else {
-            alert(`????`);
+            alert(`內容為空`);
         }
     }
 
@@ -312,9 +312,9 @@
             save('/api/default-channel', JSON.stringify({
                 channel: channel
             }))
-            showMessage('???', 3000);
+            showMessage('已確認', 3000);
         } else {
-            alert(`????`);
+            alert(`內容為空`);
         }
     }
 
@@ -324,7 +324,7 @@
             epg: epg
         }))
 
-        showMessage('???', 3000);
+        showMessage('已確認', 3000);
     }
 
     document.querySelector('#confirm-proxy').onclick = () => {
@@ -333,11 +333,11 @@
             proxy = 'http://' + proxy;
         }
         if (proxy && (!proxy.startsWith('http') && !proxy.startsWith('socks'))) {
-            alert(`?????${proxy}`);
+            alert(`無效的地址${proxy}`);
             return;
         }
         if (proxy && !isValidUrl(proxy)) {
-            alert(`?????${proxy}`);
+            alert(`無效的地址${proxy}`);
             return;
         }
         document.querySelector('#proxy').value = proxy;
@@ -345,7 +345,7 @@
             proxy: proxy
         }))
 
-        showMessage('???', 3000);
+        showMessage('已確認', 3000);
     }
 
     const save = async (url, body) => {
@@ -388,7 +388,7 @@
 
                 add.parentElement.remove();
 
-                let htmlString = `<div class="container history"><input type="text" readonly value="${uri}" class="source-grey"/><input type="button" value="??" class="remove" data-source-id="${uuid}"/></div>`;
+                let htmlString = `<div class="container history"><input type="text" readonly value="${uri}" class="source-grey"/><input type="button" value="删除" class="remove" data-source-id="${uuid}"/></div>`;
                 let doc = new DOMParser().parseFromString(htmlString, 'text/html');
                 const firstChild = source.firstChild;
                 if (firstChild) {
@@ -430,7 +430,7 @@
         document.querySelector('#proxy').value = json.proxy;
 
         json.history.forEach(v => {
-            let htmlString = `<div class="container history"><input type="text" readonly value="${v.uri}" class="source-grey"/><input type="button" value="??" class="remove" data-source-id="${v.id}"/></div>`;
+            let htmlString = `<div class="container history"><input type="text" readonly value="${v.uri}" class="source-grey"/><input type="button" value="删除" class="remove" data-source-id="${v.id}"/></div>`;
             let doc = new DOMParser().parseFromString(htmlString, 'text/html');
             source.appendChild(doc.body.firstChild);
         })
@@ -449,7 +449,7 @@
                 return
             }
 
-            let htmlString = `<div class="container history"><input type="text" readonly value="${v}" class="source-green"/><input type="button" value="??" class="add new-source" data-uri="${v}"/></div>`;
+            let htmlString = `<div class="container history"><input type="text" readonly value="${v}" class="source-green"/><input type="button" value="新增" class="add new-source" data-uri="${v}"/></div>`;
             let doc = new DOMParser().parseFromString(htmlString, 'text/html');
             sourcesNew.appendChild(doc.body.firstChild);
         })

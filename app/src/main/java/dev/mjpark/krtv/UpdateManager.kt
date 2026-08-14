@@ -68,7 +68,7 @@ class UpdateManager(
     fun checkAndUpdate() {
         Log.i(TAG, "checkAndUpdate")
         CoroutineScope(Dispatchers.Main).launch {
-            var text = "??????"
+            var text = "版本获取失败"
             var update = false
             try {
                 release = getRelease()
@@ -78,10 +78,10 @@ class UpdateManager(
                         !release!!.apk_name.isNullOrBlank() &&
                         !release!!.apk_url.isNullOrBlank()
                     ) {
-                        text = "?????${release?.version_name}"
+                        text = "最新版本：${release?.version_name}"
                         update = true
                     } else {
-                        text = "????????????"
+                        text = "已是最新版本，不需要更新"
                     }
                 }
             } catch (e: Exception) {
@@ -117,7 +117,7 @@ class UpdateManager(
         request.setAllowedOverRoaming(false)
         request.setMimeType("application/vnd.android.package-archive")
 
-        // ?????????
+        // 获取下载任务的引用
         val downloadReference = downloadManager.enqueue(request)
 
         downloadReceiver = DownloadReceiver(context, release.apk_name, downloadReference)
@@ -156,7 +156,7 @@ class UpdateManager(
                         val bytesTotalIndex =
                             it.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES)
 
-                        // ????????
+                        // 检查列名是否存在
                         if (bytesDownloadedIndex != -1 && bytesTotalIndex != -1) {
                             val bytesDownloaded = it.getInt(bytesDownloadedIndex)
                             val bytesTotal = it.getInt(bytesTotalIndex)
